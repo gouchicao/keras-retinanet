@@ -1,5 +1,46 @@
 # Keras RetinaNet 工程实践
 
+## 训练自己的数据集
+* 标注数据
+[LabelImg](https://github.com/tzutalin/labelImg)
+
+* 运行容器
+```bash
+$ sudo docker run -it --runtime=nvidia --name=keras-retinanet -p 8888:8888 -p 6006:6006 \
+                -v /home/wjunjian/ailab/datasets/helmet:/keras-retinanet/project \
+                gouchicao/keras-retinanet bash
+```
+
+* voc转csv格式，分隔数据集
+```bash
+$ python voc2csv.py --data_dir=project/labelimg/ --output_dir=project/dataset
+```
+
+* 模型训练
+```bash
+$ python keras_retinanet/bin/train.py --snapshot-path project/snapshots \
+    csv project/dataset/train.csv project/dataset/class.csv --val-annotations project/dataset/val.csv
+```
+
+* 模型评估
+```bash
+$ python keras_retinanet/bin/evaluate.py csv project/dataset/val.csv project/dataset/class.csv \
+    project/snapshots/resnet50_csv_01.h5 --convert-model
+```
+
+* 模型转换
+```bash
+$ python keras_retinanet/bin/convert_model.py --no-class-specific-filter \
+    project/snapshots/resnet50_csv_01.h5 project/models/retinanet_inference.h5
+```
+
+* 模型预测
+```bash
+$ python predict.py --model project/models/retinanet_inference.h5 \
+    --class_csv project/tmp/dataset/class.csv \
+    --data_dir project/tmp/test \
+    --predict_dir project/tmp/predict
+```
 
 ## 添加[keras-retinanet](https://github.com/fizyr/keras-retinanet.git)作为子模块到我的git项目
 
@@ -75,3 +116,25 @@ To https://github.com/gouchicao/keras-retinanet.git
    c04a28e..5fa8be7  master -> master
 ```
 
+## keras-retinanet容器
+* 构建容器镜像
+```bash
+$ sudo docker build -t gouchicao/keras-retinanet .
+```
+
+* 上传容器镜像
+```bash
+$ sudo docker push gouchicao/keras-retinanet:latest
+```
+
+* 运行容器
+```bash
+$ sudo docker run -it --runtime=nvidia --name=keras-retinanet -p 8888:8888 -p 6006:6006 \
+                -v /home/wjunjian/ailab/datasets/helmet:/keras-retinanet/project \
+                gouchicao/keras-retinanet bash
+```
+
+* 删除容器
+```bash
+$ sudo docker rm keras-retinanet
+```
