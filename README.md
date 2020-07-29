@@ -66,6 +66,7 @@ $ ll -h project/models/resnet50_csv_01.h5
 $ tensorboard --logdir=project/logs --bind_all
 ```
 在本机浏览器中访问网址:[http://localhost:6006](http://localhost:6006)
+![](tensorboard.png)
 
 * 模型评估
 ```bash
