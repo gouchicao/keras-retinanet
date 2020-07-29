@@ -4,6 +4,18 @@
 * 标注数据
 [LabelImg](https://github.com/tzutalin/labelImg)
 
+```bash
+# 标注后的目录结构
+project
+└── labelimg
+    ├── 20190128155421222575013.jpg
+    ├── 20190128155421222575013.xml
+    ├── 20190128155703035712899.jpg
+    ├── 20190128155703035712899.xml
+    ├── 20190129091126392737624.jpg
+    └── 20190129091126392737624.xml
+```
+
 * 运行容器
 ```bash
 $ sudo docker run -it --runtime=nvidia --name=keras-retinanet -p 8888:8888 -p 6006:6006 \
@@ -16,11 +28,41 @@ $ sudo docker run -it --runtime=nvidia --name=keras-retinanet -p 8888:8888 -p 60
 $ python voc2csv.py --data_dir=project/labelimg/ --output_dir=project/dataset
 ```
 
+```bash
+# 生成的目录结构
+project
+├── dataset
+│   ├── class.csv
+│   ├── train
+│   │   ├── 20190128155421222575013.jpg
+│   │   ├── 20190128155421222575013.xml
+│   │   ├── 20190129091126392737624.jpg
+│   │   └── 20190129091126392737624.xml
+│   ├── train.csv
+│   ├── val
+│   │   ├── 20190128155703035712899.jpg
+│   │   └── 20190128155703035712899.xml
+│   └── val.csv
+└── labelimg
+    ├── 20190128155421222575013.jpg
+    ├── 20190128155421222575013.xml
+    ├── 20190128155703035712899.jpg
+    ├── 20190128155703035712899.xml
+    ├── 20190129091126392737624.jpg
+    └── 20190129091126392737624.xml
+```
+
 * 模型训练
 ```bash
-$ python keras_retinanet/bin/train.py --snapshot-path project/snapshots \
+$ python keras_retinanet/bin/train.py --tensorboard-dir=project/logs --snapshot-path project/snapshots \
     csv project/dataset/train.csv project/dataset/class.csv --val-annotations project/dataset/val.csv
 ```
+
+* 训练过程可视化 TensorBoard
+```bash
+$ tensorboard --logdir=project/logs --bind_all
+```
+在本机浏览器中访问网址:[http://localhost:6006](http://localhost:6006)
 
 * 模型评估
 ```bash
