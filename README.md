@@ -77,15 +77,15 @@ $ python keras_retinanet/bin/evaluate.py csv project/dataset/val.csv project/dat
 * 模型转换
 ```bash
 $ python keras_retinanet/bin/convert_model.py --no-class-specific-filter \
-    project/snapshots/resnet50_csv_01.h5 project/models/retinanet_inference.h5
+    project/snapshots/resnet50_csv_01.h5 project/inference/model.h5
 
-$ ll -h project/models/retinanet_inference.h5
--rw-r--r-- 1 root     root     140M 7月  27 23:14 retinanet_inference.h5
+$ ll -h project/inference/model.h5
+-rw-r--r-- 1 root     root     140M 7月  27 23:14 model.h5
 ```
 
 * 模型预测
 ```bash
-$ python predict.py --model project/models/retinanet_inference.h5 \
+$ python predict.py --model project/inference/model.h5 \
     --class_csv project/dataset/class.csv \
     --data_dir project/test \
     --predict_dir project/predict
@@ -187,3 +187,14 @@ $ sudo docker run -it --runtime=nvidia --name=keras-retinanet -p 8888:8888 -p 60
 ```bash
 $ sudo docker rm keras-retinanet
 ```
+
+## 参考资料
+* [Git 工具 - 子模块](https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97)
+* [How to copy multiple files in one layer using a Dockerfile?](https://stackoverflow.com/questions/30256386/how-to-copy-multiple-files-in-one-layer-using-a-dockerfile)
+* [How to git clone only the latest revision](https://codeyarns.com/2014/06/07/how-to-git-clone-only-the-latest-revision/)
+* [How to “git clone” including submodules?](https://stackoverflow.com/questions/3796927/how-to-git-clone-including-submodules)
+* [物件偵測 - RetinaNet 介紹](https://medium.com/@gino6178/%E7%89%A9%E4%BB%B6%E5%81%B5%E6%B8%AC-retinanet-%E4%BB%8B%E7%B4%B9-dda4100673bb)
+* [Object Detection on Custom Dataset with TensorFlow 2 and Keras using Python](https://www.curiousily.com/posts/object-detection-on-custom-dataset-with-tensorflow-2-and-keras-using-python/)
+* [An Introduction to Implementing Retinanet in Keras for Multi Object Detection on Custom Dataset](https://medium.com/@tabdulwahabamin/an-introduction-to-implementing-retinanet-in-keras-for-multi-object-detection-on-custom-dataset-be746024c653)
+* [RetinaNet: Custom Object Detection training with 5 lines of code](https://towardsdatascience.com/retinanet-custom-object-detection-training-with-5-lines-of-code-37442640d142)
+* [RetinaNet和Focal Loss论文笔记](http://www.chenjianqu.com/show-124.html)
