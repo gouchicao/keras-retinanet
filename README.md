@@ -16,6 +16,11 @@ project
     └── 20190129091126392737624.xml
 ```
 
+* 拉取容器镜像
+```bash
+$ sudo docker pull gouchicao/keras-retinanet:latest
+```
+
 * 运行容器
 ```bash
 $ sudo docker run -it --runtime=nvidia --name=keras-retinanet -p 8888:8888 -p 6006:6006 \
